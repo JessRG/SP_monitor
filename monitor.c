@@ -17,7 +17,6 @@ By default the monitor program should scan forever unless overridden by the [-l 
 Use the stat() function to obtain information on files, and getdents() to scan directories.
 */
 
-// #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -25,7 +24,6 @@ Use the stat() function to obtain information on files, and getdents() to scan d
 #include <sys/stat.h>
 #include <sys/syscall.h>
 #include <ctype.h>
-//#include <time.h>
 #include <errno.h>
 #include <limits.h>
 #include <string.h>
