@@ -1,6 +1,7 @@
 # SP_monitor
 
-Details of the program
+Details of the program:
+
 % monitor [-t delay] [-l count] fileName
 
 If the fileName is a directory, all of the files inside the directory and sub-directories are scanned.
