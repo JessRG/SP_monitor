@@ -39,4 +39,4 @@ Scan 20:
 CHANGED - /temp/java/more.java
 
 These are the details of how this program should execute. Any advice or suggestions on improving and completing this program 
-will be greatly appreciated :).
+would be awesome :).
