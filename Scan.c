@@ -36,6 +36,16 @@ void modifiedScan (int delay, int count, const char *dirname)
 	{
         printf( "Scan %d:\n", i+1);
         useGetdents(i, previous, current);
+
+        if( (current->lastCycle >= 0 && current->lastCycle <= 1) &&
+        (current->thisCycle >= 0 && current->thisCycle <= 1) )
+        {
+            if (current->lastCycle == 0 && current->thisCycle == 1)
+            {
+                copyStruct(previous, current);
+            }
+        }
+
    		sleep(delay);
     }
     printf("done..\n");
@@ -43,26 +53,11 @@ void modifiedScan (int delay, int count, const char *dirname)
 
 void useGetdents(int lnum, struct statinfo *prev, struct statinfo *current)
 {
-    printf("current time: %s", ctime(&current->status.st_mtime));
-    printf("previous time %s", ctime(&prev->status.st_mtime));
-    if( (current->lastCycle >= 0 && current->lastCycle <= 1) &&
-        (current->thisCycle >= 0 && current->thisCycle <= 1) )
-    {
-        if (current->lastCycle == 1 && current->thisCycle == 0)
-        {
-            // current->lastCycle--;
-            // current->thisCycle++;
-            // printf("Current ptr copy (lastCycle true): \n");
-            copyStruct(prev, current);
-            current->lastCycle--; current->thisCycle++;
-            //printf("Swap(): current lastCycle pointer = %d\ncurrent thisCycle pointer = %d\n", current->lastCycle, current->thisCycle);
-        }
-    }
-    else
-    {
-        perror("lastCycle and thisCycle increment/decrement error");
-        exit(errno);
-    }
+    char date[20];
+    strftime(date, 20,"%d-%m-%y", localtime(&(current->status.st_mtime)));
+    printf("Current: %s\n",date);
+    strftime(date, 20,"%d-%m-%y", localtime(&(prev->status.st_mtime)));
+    printf("Previous: %s\n",date);
 
 	int fd, nread;
     char buf[BUF_SIZE];
@@ -125,18 +120,6 @@ void useGetdents(int lnum, struct statinfo *prev, struct statinfo *current)
     // }
     // else
     //     ;//do nothing
-    if( (current->lastCycle >= 0 && current->lastCycle <= 1) &&
-        (current->thisCycle >= 0 && current->thisCycle <= 1) )
-    {
-        if (current->lastCycle == 0 && current->thisCycle == 1)
-        {
-            // current->lastCycle--;
-            // current->thisCycle++;
-            // printf("Current ptr copy (lastCycle true): \n");
-            copyStruct(prev, current);
-            //printf("Swap(): current lastCycle pointer = %d\ncurrent thisCycle pointer = %d\n", current->lastCycle, current->thisCycle);
-        }
-    }
     //printf("current->lastCycle = %d current->thisCycle = %d\n",current->lastCycle, current->thisCycle);
 }
 
